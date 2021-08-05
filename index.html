@@ -3,11 +3,44 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link rel="stylesheet" href="styles.css">
         <title>CMS</title>
     </head>
     <body>
+        <form class="new-employee-form">
+            <div class="col-md-3 top10">
+                <input type="text" id="first-name" class="form-control" placeholder="First name" required>
+            </div>
+
+            <div class="col-md-3 top10">
+                <input type="text" id="last-name" class="form-control" placeholder="Last name" required>
+            </div>
+
+            <div class="col-md-3 top10">
+                <input type="email" class="form-control" id="email" placeholder="Email" required>
+            </div>
+
+            <div class="form-group col-md-3 top10">
+                <select id="inputState" class="form-control" required>
+                    <option selected>Gender</option>
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Other</option>
+                    <option>Prefer not to say</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 top10">
+                <input type="date" class="form-control" id="birthday" name="birthday" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">
+                Add employee
+            </button>
+        </form>
+
         <div class="main-table">
             <table class="table table-dark">
                 <thead>

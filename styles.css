@@ -12,3 +12,11 @@ html, body {
 .centered {
     text-align: center;
 }
+
+.new-employee-form {
+    margin: 2rem 5rem;
+}
+
+.top10 {
+    margin-top: 10px;
+}
