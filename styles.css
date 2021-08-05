@@ -16,6 +16,10 @@ tr {
     margin-top: 10px;
 }
 
+img {
+    border-radius: 50%;
+}
+
 .main {
     display: flex;
     flex-direction: row;
