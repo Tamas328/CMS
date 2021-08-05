@@ -4,19 +4,55 @@ html, body {
     padding: 0;
 }
 
-.main-table {
-    display: flex;
-    margin: 5rem 5rem;
-}
-
 .centered {
     text-align: center;
 }
 
-.new-employee-form {
-    margin: 2rem 5rem;
+tr {
+    vertical-align: middle;
 }
 
 .top10 {
     margin-top: 10px;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.new-employee-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    margin-left: 5rem;
+    width: 50%;
+}
+
+.main-table {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    margin-right: 5rem;
+    margin-left: 1rem;
+    width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+    .main {
+        flex-wrap: wrap;
+    }
+
+    .new-employee-form {
+        justify-content: center;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+
+    .main-table {
+        justify-content: center;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
 }
