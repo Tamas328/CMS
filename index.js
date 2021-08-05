@@ -15,7 +15,17 @@ const months = [
 
 for(var i = 0; i < localStorage.length; ++i) {
     var storedData = JSON.parse(localStorage.getItem(localStorage.key(i)));
-    document.getElementById("table-list").innerHTML += "<tr><td><img src='images/" + storedData[0] + "' height='50'></td><td>" + storedData[1] + "</td><td>" + storedData[2] + "</td><td>" + storedData[3] + "</td><td>" + storedData[4] + "</td><td>" + storedData[5] + "</td></tr>";
+    document.getElementById("table-list").innerHTML += "<tr>\
+        <td><img src='images/" + storedData[0] + "' height='50'></td>\
+        <td>" + storedData[1] + "</td>\
+        <td>" + storedData[2] + "</td>\
+        <td>" + storedData[3] + "</td>\
+        <td>" + storedData[4] + "</td>\
+        <td>" + storedData[5] + "</td>\
+        <td ><svg xmlns='http://www.w3.org/2000/svg' onclick='deleteRow(this)' width='24' height='24' fill='currentColor' class='bi bi-person-dash-fill deleteRow' viewBox='0 0 16 16'>\
+            <path fill-rule='evenodd' d='M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z'/><path d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/></svg>\
+        </td>\
+    </tr>";
 }
 
 function addEmployee() {
@@ -23,6 +33,15 @@ function addEmployee() {
     let firstName = document.querySelector('#first-name').value;
     let lastName = document.querySelector('#last-name').value;
     let email = document.querySelector('#email').value;
+
+    for(var i = 0; i < localStorage.length; ++i) {
+        var storedData = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        if(email == storedData[3]) {
+            alert("This email address already exists.");
+            return;
+        }
+    }
+
     let gender = document.querySelector('#gender').value;
     let dob = document.querySelector('#birthday').value;
     let img = document.querySelector('#avatar');
@@ -37,7 +56,17 @@ function addEmployee() {
 
     data.push(img, firstName, lastName, email, gender, birthday);
 
-    document.getElementById("table-list").innerHTML += "<tr><td><img src='images/" + img + "' height='50'></td><td>" + firstName + "</td><td>" + lastName + "</td><td>" + email + "</td><td>" + gender + "</td><td>" + birthday + "</td></tr>";
+    document.getElementById("table-list").innerHTML += "<tr>\
+        <td><img src='images/" + img + "' height='50'></td>\
+        <td>" + firstName + "</td>\
+        <td>" + lastName + "</td>\
+        <td>" + email + "</td>\
+        <td>" + gender + "</td>\
+        <td>" + birthday + "</td>\
+        <td ><svg xmlns='http://www.w3.org/2000/svg' onclick='deleteRow(this)' width='24' height='24' fill='currentColor' class='bi bi-person-dash-fill deleteRow' viewBox='0 0 16 16'>\
+            <path fill-rule='evenodd' d='M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z'/><path d='M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/></svg>\
+        </td>\
+    </tr>";
     document.getElementById("employee").reset();
 
     localStorage.setItem(email, JSON.stringify(data));
@@ -51,4 +80,10 @@ function getDOB(dob) {
     const month = months[mIndex];
     
     return date + " " + month + " " + year;
+}
+
+function deleteRow(r) {
+    var i = r.parentNode.parentNode.rowIndex;
+    localStorage.removeItem(localStorage.key(i - 1));
+    document.getElementById("emp-table").deleteRow(i);
 }

@@ -12,19 +12,19 @@
             <div class="new-employee-form">
                 <form onsubmit="event.preventDefault();" name="employee" id="employee">
                     <div class="col-lg-10 top10">
-                        <input type="text" id="first-name" name="firstName" class="form-control" placeholder="First name" >
+                        <input type="text" id="first-name" name="firstName" class="form-control" placeholder="First name" required>
                     </div>
         
                     <div class="col-lg-10 top10">
-                        <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Last name" >
+                        <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Last name" required>
                     </div>
         
                     <div class="col-lg-10 top10">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" >
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                     </div>
         
                     <div class="form-group col-lg-10 top10">
-                        <select id="gender" name="gender" class="form-control" >
+                        <select id="gender" name="gender" class="form-control" required>
                             <option selected>Gender</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
@@ -34,7 +34,7 @@
                     </div>
         
                     <div class="col-lg-10 top10">
-                        <input type="date" class="form-control" id="birthday" name="birthday" >
+                        <input type="date" class="form-control" id="birthday" name="birthday" required>
                     </div>
         
                     <div class="col-lg-10 top10">
@@ -48,7 +48,7 @@
             </div>
     
             <div class="main-table">
-                <table class="table table-dark">
+                <table class="table table-custom" id="emp-table">
                     <thead>
                         <tr class="centered">
                             <th scope="col">Avatar</th>
@@ -57,6 +57,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">Sex</th>
                             <th scope="col">Date of Birth</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody id="table-list" class="centered table-light">
