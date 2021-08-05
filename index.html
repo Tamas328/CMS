@@ -12,11 +12,11 @@
             <div class="new-employee-form">
                 <form onsubmit="event.preventDefault();" name="employee" id="employee">
                     <div class="col-lg-10 top10">
-                        <input type="text" id="first-name" name="firstName" class="form-control" placeholder="First name" required>
+                        <input type="text" id="first-name" name="firstName" class="form-control" placeholder="First name" required pattern=".{8,40}">
                     </div>
         
                     <div class="col-lg-10 top10">
-                        <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Last name" required>
+                        <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Last name" required pattern=".{8,50}">
                     </div>
         
                     <div class="col-lg-10 top10">
@@ -34,7 +34,7 @@
                     </div>
         
                     <div class="col-lg-10 top10">
-                        <input type="date" class="form-control" id="birthday" name="birthday" required>
+                        <input type="date" min="1900-01-01" max="2005-12-12" class="form-control" id="birthday" name="birthday" required>
                     </div>
         
                     <div class="col-lg-10 top10">
