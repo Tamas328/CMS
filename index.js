@@ -24,6 +24,7 @@ function addEmployee() {
     let birthday = getDOB(dob);
 
     document.getElementById("table-list").innerHTML += "<tr><td><img src='images/" + img + "' height='50'></td><td>" + firstName + "</td><td>" + lastName + "</td><td>" + email + "</td><td>" + gender + "</td><td>" + birthday + "</td></tr>";
+    document.getElementById("employee").reset();
 }
 
 function getDOB(dob) {
