@@ -46,6 +46,11 @@ function addEmployee() {
     let dob = document.querySelector('#birthday').value;
     let img = document.querySelector('#avatar');
 
+    if(firstName == "" || lastName == "" || email == "" || gender == "Not specified" || !dob) {
+        alert("Please fill out all fields.");
+        return;
+    }
+
     if(img.files.length == 0) {
         img = "default.jpg";
     } else {
