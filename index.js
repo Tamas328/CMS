@@ -83,7 +83,7 @@ function getDOB(dob) {
     const date = d.getDate();
     const mIndex = d.getMonth();
     const month = months[mIndex];
-    
+
     return date + " " + month + " " + year;
 }
 
