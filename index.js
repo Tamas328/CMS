@@ -11,7 +11,7 @@ const months = [
     'October',
     'November',
     'December'
-]
+];
 
 for(var i = 0; i < localStorage.length; ++i) {
     var storedData = JSON.parse(localStorage.getItem(localStorage.key(i)));
@@ -33,6 +33,12 @@ function addEmployee() {
     let firstName = document.querySelector('#first-name').value;
     let lastName = document.querySelector('#last-name').value;
     let email = document.querySelector('#email').value;
+
+    const regx = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    if(!regx.test(email)) {
+        alert("Invalid email format.");
+        return; 
+    }
 
     for(var i = 0; i < localStorage.length; ++i) {
         var storedData = JSON.parse(localStorage.getItem(localStorage.key(i)));
