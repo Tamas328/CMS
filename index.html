@@ -59,29 +59,35 @@
     
             <div class="main-table">
                 <input type="text" id="search-bar" onkeyup="search_filter();" placeholder="Search for employee">
+                <div id="wrapper-filter">
+                    <button>First name</button>
+                    <button>Last name</button>
+                    <button>Email</button>
+                    <button>Sex</button>
+                    <button>Birthday</button>
+                </div>
                 <table class="table table-custom" id="emp-table">
                     <thead>
                         <tr class="centered">
                             <th scope="col">
                                 Avatar
                             </th>
-                            <th scope="col">
+                            <th scope="col" onclick="sortTable(1);">
                                 First Name
                             </th>
-                            <th scope="col">
+                            <th scope="col" onclick="sortTable(2);">
                                 Last Name
                             </th>
-                            <th scope="col">
+                            <th scope="col" onclick="sortTable(3);">
                                 Email
                             </th>
-                            <th scope="col">
+                            <th scope="col" onclick="sortTable(4);">
                                 Sex
                             </th>
-                            <th scope="col">
+                            <th scope="col" onclick="sortByDate();">
                                 Date of Birth
                             </th>
                             <th scope="col">
-
                             </th>
                         </tr>
                     </thead>
