@@ -12,15 +12,15 @@
             <div class="new-employee-form">
                 <form onsubmit="event.preventDefault();" name="employee" id="employee">
                     <div class="col-lg-10 top10">
-                        <input type="text" id="first-name" name="firstName" class="form-control" placeholder="First name" required pattern=".{8,40}">
+                        <input type="text" id="first-name" name="firstName" class="form-control" placeholder="First name" required pattern=".{8,40}" spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
                     </div>
         
                     <div class="col-lg-10 top10">
-                        <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Last name" required pattern=".{8,50}">
+                        <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Last name" required pattern=".{8,50}" spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
                     </div>
         
                     <div class="col-lg-10 top10">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
                     </div>
         
                     <div class="form-group col-lg-10 top10">
@@ -60,11 +60,12 @@
             <div class="main-table">
                 <input type="text" id="search-bar" onkeyup="search_filter();" placeholder="Search for employee">
                 <div id="wrapper-filter">
-                    <button>First name</button>
-                    <button>Last name</button>
-                    <button>Email</button>
-                    <button>Sex</button>
-                    <button>Birthday</button>
+                    <button onclick="sortPicture()">Avatar</button>
+                    <button onclick="sortTable(1)">First name</button>
+                    <button onclick="sortTable(2)">Last name</button>
+                    <button onclick="sortTable(3)">Email</button>
+                    <button onclick="sortTable(4)">Sex</button>
+                    <button onclick="sortBirthday()">Birthday</button>
                 </div>
                 <table class="table table-custom" id="emp-table">
                     <thead>
@@ -72,19 +73,19 @@
                             <th scope="col">
                                 Avatar
                             </th>
-                            <th scope="col" onclick="sortTable(1);">
+                            <th scope="col"">
                                 First Name
                             </th>
-                            <th scope="col" onclick="sortTable(2);">
+                            <th scope="col">
                                 Last Name
                             </th>
-                            <th scope="col" onclick="sortTable(3);">
+                            <th scope="col"">
                                 Email
                             </th>
-                            <th scope="col" onclick="sortTable(4);">
+                            <th scope="col">
                                 Sex
                             </th>
-                            <th scope="col" onclick="sortByDate();">
+                            <th scope="col">
                                 Date of Birth
                             </th>
                             <th scope="col">

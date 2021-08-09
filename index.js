@@ -73,7 +73,7 @@ function addEmployee() {
     data.push(img, firstName, lastName, email, gender, birthday);
 
     document.getElementById("table-list").innerHTML += "<tr>\
-        <td><img src='images/" + img + "' height='50'></td>\
+        <td><img id='avatar' src='images/" + img + "' height='50'></td>\
         <td>" + firstName + "</td>\
         <td>" + lastName + "</td>\
         <td>" + email + "</td>\
@@ -90,12 +90,12 @@ function addEmployee() {
 
 function getDOB(dob) {
     const d = new Date(dob);
-    const year = d.getFullYear();
-    const date = d.getDate();
-    const mIndex = d.getMonth();
-    const month = months[mIndex];
 
-    return date + " " + month + " " + year;
+    return d.toLocaleString('ro-RO', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    })
 }
 
 function deleteRow(r) {
@@ -162,8 +162,4 @@ function sortTable(n) {
             }
         }
     }
-}
-
-function sortByDate() {
-    
 }
