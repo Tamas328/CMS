@@ -32,7 +32,6 @@ function loadTable() {
     }
 }
 
-
 function addEmployee() {
     const data = [];
     let firstName = document.querySelector('#first-name').value;
@@ -90,12 +89,18 @@ function addEmployee() {
 
 function getDOB(dob) {
     const d = new Date(dob);
+    const year = d.getFullYear();
+    const date = d.getDate();
+    const mIndex = d.getMonth();
+    const month = months[mIndex];
 
-    return d.toLocaleString('ro-RO', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-    })
+    return date + " " + month + " " + year;
+
+    // return d.toLocaleString('ro-RO', {
+    //     day: 'numeric',
+    //     month: 'long',
+    //     year: 'numeric',
+    // })
 }
 
 function deleteRow(r) {
