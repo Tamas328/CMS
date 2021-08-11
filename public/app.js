@@ -96,3 +96,22 @@ function initializeFirebase() {
     });
 }
 
+function search_filter() {
+    var input = document.getElementById("search-bar");
+    var filter = input.value.toUpperCase();
+    var table = document.getElementById("emp-table");
+    var tr = table.getElementsByTagName("tr");
+    for(var i = 0; i < tr.length; ++i) {
+        var firstName = tr[i].getElementsByTagName("td")[1];
+        var lastName = tr[i].getElementsByTagName("td")[2];
+        if(firstName && lastName) {
+            var txtValue = firstName.textContent + " " + lastName.textContent || firstName.innerText + " " + lastName.innerText;
+            if(txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
