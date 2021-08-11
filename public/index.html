@@ -19,22 +19,17 @@
     <script defer src="/__/firebase/8.9.1/firebase-analytics.js"></script>
     <script defer src="/__/firebase/8.9.1/firebase-remote-config.js"></script>
     <script defer src="/__/firebase/8.9.1/firebase-performance.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
   </head>
-  <body>
+  <body onload="initializeFirebase()">
     <div class="main">
             <div class="new-employee-form">
                 <form name="employee" id="employeeForm">
                     <div class="col-lg-10 top10">
-                        <input type="text" id="first-name" name="firstName" class="form-control" placeholder="First name"  pattern=".{8,40}" spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
+                        <input type="text" id="first-name" name="firstName" class="form-control" placeholder="First name" spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
                     </div>
         
                     <div class="col-lg-10 top10">
-                        <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Last name"  pattern=".{8,50}" spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
+                        <input type="text" id="last-name" name="lastName" class="form-control" placeholder="Last name" spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
                     </div>
         
                     <div class="col-lg-10 top10">
