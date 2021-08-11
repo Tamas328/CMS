@@ -66,6 +66,10 @@ img {
     fill: #B31100;
 }
 
+.editEmployee:hover {
+    fill: #444d5f;
+}
+
 @media only screen and (max-width: 1430px) {
     .main {
         flex-wrap: wrap;
