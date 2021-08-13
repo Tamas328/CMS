@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <title>CMS</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.9.1/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
@@ -38,19 +39,19 @@
         
                     <div class="form-group col-lg-10 top10">
                         <select id="gender" name="gender" class="form-control" >
-                            <option selected value="Not specified">
+                            <option id="not-specified" value="Not specified">
                                 Gender
                             </option>
-                            <option value="Female">
+                            <option id="female" value="Female">
                                 Female
                             </option>
-                            <option value="Male">
+                            <option id="male" value="Male">
                                 Male
                             </option>
-                            <option value="Other">
+                            <option id="other" value="Other">
                                 Other
                             </option>
-                            <option value="Unknown">
+                            <option id="not-to-say" value="Unknown">
                                 Prefer not to say
                             </option>
                         </select>
@@ -67,9 +68,76 @@
                     <button type="submit" id="submit" class="btn btn-primary" style="margin-top: 20px;">
                         Add employee
                     </button>
+                    <button type="reset" class="btn btn-primary" style="margin-top: 20px;">
+                        Clear fields
+                    </button>
                 </form>
             </div>
-    
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Edit employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-10 top10">
+                        <img id="avatar2-preview" src="" style="width: 250px; margin-bottom: 10px;">
+                    </div>
+                    <div class="col-lg-10 top10">
+                        <input type="text" id="emp-id" name="emp-id" class="form-control" readonly>
+                    </div>
+                    <div class="col-lg-10 top10">
+                        <input type="text" id="first-name2" name="firstName2" class="form-control" placeholder="First name" spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
+                    </div>
+        
+                    <div class="col-lg-10 top10">
+                        <input type="text" id="last-name2" name="lastName2" class="form-control" placeholder="Last name" spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
+                    </div>
+        
+                    <div class="col-lg-10 top10">
+                        <input type="email2" class="form-control" id="email2" name="email" email placeholder="Email"  spellcheck="false" autocapitalize="off" aria-autocomplete="both" autocomplete="off">
+                    </div>
+        
+                    <div class="form-group col-lg-10 top10">
+                        <select id="gender2" name="gender2" class="form-control" >
+                            <option id="not-specified" value="Not specified">
+                                Gender
+                            </option>
+                            <option id="female" value="Female">
+                                Female
+                            </option>
+                            <option id="male" value="Male">
+                                Male
+                            </option>
+                            <option id="other" value="Other">
+                                Other
+                            </option>
+                            <option id="not-to-say" value="Unknown">
+                                Prefer not to say
+                            </option>
+                        </select>
+                    </div>
+        
+                    <div class="col-lg-10 top10">
+                        <input type="date" min="1900-01-01" max="2005-12-12" class="form-control" id="birthday2" name="birthday2" required>
+                    </div>
+        
+                    <div class="col-lg-10 top10">
+                        <input type="file" class="form-control" id="avatar2" name="avatar2"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update">Save changes</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
             <div class="main-table">
                 <input type="text" id="search-bar" onkeyup="search_filter();" placeholder="Search for employee">
                 <div id="wrapper-filter">
@@ -112,6 +180,10 @@
                 </table>
             </div>
         </div>
+        
     <script src="app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>

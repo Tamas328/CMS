@@ -11,13 +11,19 @@ html, body {
     letter-spacing: 0.75px;
 }
 
+.table td, .table th {
+    vertical-align: middle;
+}
+
 .btn-primary {
     background-color: #D3AC2B;
     border: 2px solid #D3AC2B;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1), 0 5px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
     color: black;
     background-color: transparent;
     border: 2px solid #D3AC2B;
@@ -216,4 +222,14 @@ img {
 #wrapper-filter button:hover {
     background-color: #333D51;
     color: white;
+}
+
+.modal-body div {
+    margin: 10px auto;
+    text-align: center;
+}
+
+#avatar2-preview {
+    max-width: 100%;
+    height: auto;
 }
