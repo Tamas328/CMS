@@ -19,6 +19,8 @@ html, body {
     background-color: #D3AC2B;
     border: 2px solid #D3AC2B;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1), 0 5px 5px 0 rgba(0, 0, 0, 0.12);
+    width: auto;
+    margin: 0 auto;
 }
 
 .btn-primary:hover,
@@ -27,6 +29,11 @@ html, body {
     color: black;
     background-color: transparent;
     border: 2px solid #D3AC2B;
+}
+
+#employeeForm input {
+    max-width: 100%;
+    height: auto;
 }
 
 .centered {
@@ -55,8 +62,9 @@ img {
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
-    margin-left: 5rem;
-    width: 50%;
+    margin-left: 2rem;
+    display: block;
+        width: 100%;
 }
 
 .main-table {
@@ -76,7 +84,11 @@ img {
     fill: #444d5f;
 }
 
-@media only screen and (max-width: 1430px) {
+#employeeForm button {
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 1600px) {
     .main {
         flex-wrap: wrap;
     }
@@ -85,6 +97,7 @@ img {
         justify-content: center;
         margin-left: 1.5rem;
         margin-right: 1.5rem;
+        
     }
 
     .main-table {
@@ -106,10 +119,10 @@ img {
     }
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 750px) {
     .new-employee-form {
-        display: block;
-        width: 100%;
+        margin: 10px auto;
+        text-align: center;
     }
 
     .new-employee-form button {

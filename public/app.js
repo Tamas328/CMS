@@ -14,43 +14,6 @@ function initializeFirebase() {
     const db = firebase.firestore();
     const empRef = db.collection("Employees")
 
-    document.getElementById('employeeForm').addEventListener('submit', submitForm);
-
-    function submitForm(e) {
-        e.preventDefault();
-        
-        var avatar = document.getElementById('avatar');
-        if(avatar.files.length == 0) {
-            avatar = 'default.jpg';
-        }
-        var firstName = getValues('first-name');
-        var lastName = getValues('last-name');
-        var email = getValues('email');
-        var sex = getValues('gender');
-        var birthdate = getValues('birthday');
-        birthdate = new Date(birthdate);
-        birthdate = moment(birthdate).format('D MMMM YYYY');
-
-        addEmployee(avatar, firstName, lastName, email, sex, birthdate);
-    }
-
-    function getValues(id) {
-        return document.getElementById(id).value;
-    }
-
-    function addEmployee(avatar, firstName, lastName, email, sex, birthdate) {
-        db.collection('Employees').add({
-            avatar: avatar,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            sex: sex,
-            birthdate: birthdate
-        });
-        document.getElementById('employeeForm').reset();
-        refreshTable();
-    }
-
     const ref = firebase.firestore().collection('Employees');
     ref.onSnapshot(snapshot => {
         let req = [];
@@ -71,9 +34,12 @@ function initializeFirebase() {
             var td7 = document.createElement("td");
             var td8 = document.createElement("td");
 
-            td1.innerHTML = `<img id="avatar" src='/images/${request.avatar}' height="50">`; td2.innerHTML = `${request.firstName}`;
-            td3.innerHTML = `${request.lastName}`; td4.innerHTML = `${request.email}`;
-            td5.innerHTML = `${request.sex}`; td6.innerHTML = `${request.birthdate}`;
+            td1.innerHTML = `<img id="avatar" src='/images/${request.avatar}' height="50">`; 
+            td2.innerHTML = `${request.firstName}`;
+            td3.innerHTML = `${request.lastName}`; 
+            td4.innerHTML = `${request.email}`;
+            td5.innerHTML = `${request.sex}`; 
+            td6.innerHTML = `${request.birthdate}`;
             td7.innerHTML = `<svg id=edit${request.id} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-lines-fill editEmployee" viewBox="0 0 16 16">
                                 <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/></svg>`;
             td8.innerHTML = `<svg id=${request.id} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-dash-fill deleteRow" viewBox="0 0 16 16">\
@@ -85,19 +51,60 @@ function initializeFirebase() {
             tr.appendChild(td7); tr.appendChild(td8);
 
             document.getElementById(`${request.id}`).addEventListener('click', function (e) {
-                db.collection("Employees").doc(this.getAttribute('id')).delete();
-                refreshTable();
+                if(confirm(`Delete employee: ${request.firstName} ${request.lastName}?`)) {
+                    db.collection("Employees").doc(this.getAttribute('id')).delete();
+                    refreshTable();
+                }
             });
-
+            
             document.getElementById(`edit${request.id}`).addEventListener('click', function (e) {
                 $('#myModal').modal('show');
                 document.getElementById('emp-id').value = `${request.id}`;
                 db.collection("Employees").doc(`${request.id}`).get()
                     .then(snapshot => setModalData(snapshot.data()));
-
+            
             });
         });
     });
+}
+
+document.getElementById('employeeForm').addEventListener('submit', submitForm);
+
+function submitForm(e) {
+    e.preventDefault();
+    
+    var avatar = document.getElementById('avatar');
+    if(avatar.files.length == 0) {
+        avatar = "d.png";
+    } else {
+        avatar = avatar.files[0].name;
+    }
+    var firstName = getValues('first-name');
+    var lastName = getValues('last-name');
+    var email = getValues('email');
+    var sex = getValues('gender');
+    var birthdate = getValues('birthday');
+    birthdate = new Date(birthdate);
+    birthdate = moment(birthdate).format('D MMMM YYYY');
+
+    addEmployee(avatar, firstName, lastName, email, sex, birthdate);
+}
+
+function getValues(id) {
+    return document.getElementById(id).value;
+}
+
+function addEmployee(avatar, firstName, lastName, email, sex, birthdate) {
+    firebase.firestore().collection('Employees').add({
+        avatar: avatar,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        sex: sex,
+        birthdate: birthdate
+    });
+    document.getElementById('employeeForm').reset();
+    refreshTable();
 }
 
 function refreshTable() {
@@ -228,6 +235,47 @@ function sortBirthday() {
             shouldSwitch = false;
             x = new Date(rows[i].getElementsByTagName("TD")[5].innerHTML);
             y = new Date(rows[i + 1].getElementsByTagName("TD")[5].innerHTML);
+
+            if (dir == "asc") {
+                if (x > y) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x < y) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
+
+function sortPicture() {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("emp-table");
+    switching = true;
+
+    dir = "asc";
+
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("img")[0].src.length;
+            y = rows[i + 1].getElementsByTagName("img")[0].src.length;
 
             if (dir == "asc") {
                 if (x > y) {
