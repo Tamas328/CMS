@@ -20,7 +20,6 @@ function initializeFirebase() {
         snapshot.forEach(doc => {
             req.push({...doc.data(), id: doc.id})
         });
-        let html = ``;
         var tableBody = document.getElementById("table-list");
         req.forEach(request => {
             var id = `${request.id}`;
@@ -34,7 +33,7 @@ function initializeFirebase() {
             var td7 = document.createElement("td");
             var td8 = document.createElement("td");
 
-            td1.innerHTML = `<img id="avatar" src='/images/${request.avatar}' height="50">`; 
+            td1.innerHTML = `<img id="avatar" src='${request.avatar}' height="50">`; 
             td2.innerHTML = `${request.firstName}`;
             td3.innerHTML = `${request.lastName}`; 
             td4.innerHTML = `${request.email}`;
@@ -72,21 +71,41 @@ document.getElementById('employeeForm').addEventListener('submit', submitForm);
 function submitForm(e) {
     e.preventDefault();
     
-    var avatar = document.getElementById('avatar');
-    if(avatar.files.length == 0) {
-        avatar = "d.png";
-    } else {
-        avatar = avatar.files[0].name;
-    }
-    var firstName = getValues('first-name');
-    var lastName = getValues('last-name');
-    var email = getValues('email');
-    var sex = getValues('gender');
-    var birthdate = getValues('birthday');
-    birthdate = new Date(birthdate);
-    birthdate = moment(birthdate).format('D MMMM YYYY');
+    var avatar = '';
 
-    addEmployee(avatar, firstName, lastName, email, sex, birthdate);
+    const file = document.getElementById("avatar").files[0];
+    if(!file) {
+        avatar = "/images/d.png";
+        var firstName = getValues('first-name');
+        var lastName = getValues('last-name');
+        var email = getValues('email');
+        var sex = getValues('gender');
+        var birthdate = getValues('birthday');
+        birthdate = new Date(birthdate);
+        birthdate = moment(birthdate).format('D MMMM YYYY');
+
+        addEmployee(avatar, firstName, lastName, email, sex, birthdate);
+    } else {
+        const storageRef = firebase.app().storage().ref();
+        var metadata = { contentType: file.type };
+        const fileRef = storageRef.child(file.name).put(file, metadata);
+        fileRef.on('state_changed', function(snapshot) {
+        }, function(error) {
+        }, function() {
+            fileRef.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                avatar = downloadURL;
+                var firstName = getValues('first-name');
+                var lastName = getValues('last-name');
+                var email = getValues('email');
+                var sex = getValues('gender');
+                var birthdate = getValues('birthday');
+                birthdate = new Date(birthdate);
+                birthdate = moment(birthdate).format('D MMMM YYYY');
+
+                addEmployee(avatar, firstName, lastName, email, sex, birthdate);
+            })
+        })
+    }
 }
 
 function getValues(id) {
@@ -120,11 +139,11 @@ function setModalData(data) {
     document.getElementById('gender2').value = data.sex;
     var bdate = new Date(data.birthdate);
     document.getElementById('birthday2').value = moment(bdate).format('yyyy-MM-DD');
-    document.getElementById('avatar2-preview').src = 'images/' + data.avatar;
+    document.getElementById('avatar2-preview').src = data.avatar;
 }
 
 document.getElementById('avatar2').addEventListener('change', function (e) {
-    document.getElementById('avatar2-preview').src = 'images/' + this.files[0].name;
+    document.getElementById('avatar2-preview').src = '/images/' + this.files[0].name;
 });
 
 document.getElementById('update').addEventListener('click', function (e) {
@@ -137,15 +156,24 @@ document.getElementById('update').addEventListener('click', function (e) {
     bdate = moment(bdate).format('D MMMM YYYY');
     var avatar = document.getElementById('avatar2');
     if(avatar.files.length != 0) {
-        avatar = avatar.files[0].name;
-        firebase.firestore().collection("Employees").doc(id).update({
-            avatar: avatar,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            sex: sex,
-            birthdate: bdate
-        });
+        const file = document.getElementById("avatar2").files[0];
+        const storageRef = firebase.app().storage().ref();
+        var metadata = { contentType: file.type };
+        const fileRef = storageRef.child(file.name).put(file, metadata);
+        fileRef.on('state_changed', function(snapshot) {
+        }, function(error) {
+        }, function() {
+            fileRef.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                firebase.firestore().collection("Employees").doc(id).update({
+                    avatar: downloadURL,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    sex: sex,
+                    birthdate: bdate
+                });
+            })
+        })
     } else {
         firebase.firestore().collection("Employees").doc(id).update({
             firstName: firstName,
@@ -383,36 +411,6 @@ for(var i = 0; i < sortings.length; ++i) {
     })
 }
 
-// document.getElementById('date-from').addEventListener('change', function(e) {
-//     var dateFrom = new Date(this.value);
-//     var table = document.getElementById("emp-table");
-//     var rows = table.rows;
-
-//     for(var i = 1; i <= (rows.length - 1); ++i) {
-//         var rowDate = new Date(rows[i].getElementsByTagName("td")[5].innerText);
-//         if(rowDate >= dateFrom) {
-//             rows[i].style.display = "";
-//         } else {
-//             rows[i].style.display = "none";
-//         }
-//     }
-// });
-
-// document.getElementById('date-to').addEventListener('change', function(e) {
-//     var dateTo = new Date(this.value);
-//     var table = document.getElementById("emp-table");
-//     var rows = table.rows;
-
-//     for(var i = 1; i <= (rows.length - 1); ++i) {
-//         var rowDate = new Date(rows[i].getElementsByTagName("td")[5].innerText);
-//         if(rowDate <= dateTo) {
-//             rows[i].style.display = "";
-//         } else {
-//             rows[i].style.display = "none";
-//         }
-//     }
-// });
-
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('date-from').addEventListener('change', filterRows);
     document.getElementById('date-to').addEventListener('change', filterRows);
@@ -441,6 +439,3 @@ function filterRows() {
         rows[i].style.display = visible;
     }
 }
-
-// var bdate = new Date(data.birthdate);
-//     document.getElementById('birthday2').value = moment(bdate).format('yyyy-MM-DD');
