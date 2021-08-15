@@ -76,12 +76,12 @@ img {
     width: 100%;
 }
 
-.deleteRow:hover {
-    fill: #B31100;
+.fa-user-minus:hover {
+    color: #B31100;
 }
 
-.editEmployee:hover {
-    fill: #444d5f;
+.fa-user-edit:hover {
+    color: #D3AC2B;
 }
 
 #employeeForm button {
@@ -111,7 +111,7 @@ img {
         margin: 0 auto;
     }
 
-    #wrapper-filter {
+    #wrapper-sort {
         display: flex;
         flex-wrap: wrap;
         margin: 0 auto;
@@ -176,7 +176,63 @@ img {
 	}
 }
 
+#filter-bar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 36px;
+    display: inline-flex;
+}
+
+#wrapper-sort {
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    margin: 20px auto;
+    border-radius: 30px;
+}
+
+#wrapper-sort button, .sort-date {
+    color: #000;
+    min-width: 190px;
+    width: auto;
+    background-color: transparent;
+    text-align: center;
+    list-style-type: none;
+    z-index: 10;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-weight: 100;
+    font-size: 15px;
+    line-height: 36px;
+    border: none;
+    border-radius: 30px;
+    padding-right: 10px;
+}
+
+#wrapper-sort button:hover, .sort-date:hover {
+    background-color: #333D51;
+    color: white;
+}
+
+#wrapper-sort input::-webkit-calendar-picker-indicator:hover {
+    filter: invert(1);
+}
+
+.modal-body div {
+    margin: 10px auto;
+    text-align: center;
+}
+
+#avatar2-preview {
+    max-width: 100%;
+    height: auto;
+}
+
 #search-bar {
+    all: unset;
     font-size: 16px;
     margin-bottom: 16px;
     padding: 12px;
@@ -196,53 +252,4 @@ img {
     outline: none;
     box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.08);
     border: 1px solid transparent;
-}
-
-#filter-bar {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    height: 36px;
-    display: inline-flex;
-}
-
-#wrapper-filter {
-    background-color: #fff;
-    display: flex;
-    flex-direction: row;
-    width: auto;
-    height: auto;
-    margin: 30px auto;
-    border-radius: 30px;
-}
-
-#wrapper-filter button {
-    min-width: 190px;
-    width: auto;
-    background-color: transparent;
-    text-align: center;
-    list-style-type: none;
-    z-index: 10;
-    cursor: pointer;
-    font-family: Arial, sans-serif;
-    font-weight: 100;
-    font-size: 15px;
-    line-height: 36px;
-    border: none;
-    border-radius: 30px;
-}
-
-#wrapper-filter button:hover {
-    background-color: #333D51;
-    color: white;
-}
-
-.modal-body div {
-    margin: 10px auto;
-    text-align: center;
-}
-
-#avatar2-preview {
-    max-width: 100%;
-    height: auto;
 }

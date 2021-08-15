@@ -40,10 +40,9 @@ function initializeFirebase() {
             td4.innerHTML = `${request.email}`;
             td5.innerHTML = `${request.sex}`; 
             td6.innerHTML = `${request.birthdate}`;
-            td7.innerHTML = `<svg id=edit${request.id} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-lines-fill editEmployee" viewBox="0 0 16 16">
-                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/></svg>`;
-            td8.innerHTML = `<svg id=${request.id} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-dash-fill deleteRow" viewBox="0 0 16 16">\
-                                <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/><path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>`
+            td7.innerHTML = `<i id=edit${request.id} class="fas fa-lg fa-user-edit"></i>`;
+            
+            td8.innerHTML = `<i id=${request.id} class="fas fa-lg fa-user-minus"></i>`
             tableBody.appendChild(tr);
             
             tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
@@ -301,3 +300,147 @@ function sortPicture() {
         }
     }
 }
+
+function filter(x) {
+    var defaultPicture = "/images/d.png";
+    var table = document.getElementById("emp-table");
+    var rows = table.rows;
+    switch (x) {
+        case 'With avatar':
+            for(var i = 1; i <= (rows.length - 1); ++i) {
+                var img = rows[i].getElementsByTagName("img")[0].getAttribute("src");
+                if(img == defaultPicture) {
+                    rows[i].style.display = "none";
+                } else {
+                    rows[i].style.display = "";
+                }
+            }
+            break;
+        case 'Without avatar':
+            for(var i = 1; i <= (rows.length - 1); ++i) {
+                var img = rows[i].getElementsByTagName("img")[0].getAttribute("src");
+                if(img != defaultPicture) {
+                    rows[i].style.display = "none";
+                } else {
+                    rows[i].style.display = "";
+                }
+            }
+            break;
+        case 'Female':
+            for(var i = 1; i <= (rows.length - 1); ++i) {
+                var f = rows[i].getElementsByTagName("TD")[4].innerHTML;
+                if(f == "Female") {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+            break;
+        case 'Male':
+            for(var i = 1; i <= (rows.length - 1); ++i) {
+                var f = rows[i].getElementsByTagName("TD")[4].innerHTML;
+                if(f == "Male") {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+            break;
+        case 'Other':
+            for(var i = 1; i <= (rows.length - 1); ++i) {
+                var f = rows[i].getElementsByTagName("TD")[4].innerHTML;
+                if(f == "Other") {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+            break;
+        case 'Prefer not to say':
+            for(var i = 1; i <= (rows.length - 1); ++i) {
+                var f = rows[i].getElementsByTagName("TD")[4].innerHTML;
+                if(f == "Unknown") {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+            break;
+        case 'Reset filter':
+            for(var i = 1; i <= (rows.length - 1); ++i) {
+                var img = rows[i].getElementsByTagName("img")[0].getAttribute("src");
+                rows[i].style.display = "";
+            }
+            break;
+    }
+}
+
+var sortings = document.getElementsByClassName('dropdown-item');
+
+for(var i = 0; i < sortings.length; ++i) {
+    sortings[i].addEventListener('click', function(e) {
+        filter(this.innerHTML);
+    })
+}
+
+// document.getElementById('date-from').addEventListener('change', function(e) {
+//     var dateFrom = new Date(this.value);
+//     var table = document.getElementById("emp-table");
+//     var rows = table.rows;
+
+//     for(var i = 1; i <= (rows.length - 1); ++i) {
+//         var rowDate = new Date(rows[i].getElementsByTagName("td")[5].innerText);
+//         if(rowDate >= dateFrom) {
+//             rows[i].style.display = "";
+//         } else {
+//             rows[i].style.display = "none";
+//         }
+//     }
+// });
+
+// document.getElementById('date-to').addEventListener('change', function(e) {
+//     var dateTo = new Date(this.value);
+//     var table = document.getElementById("emp-table");
+//     var rows = table.rows;
+
+//     for(var i = 1; i <= (rows.length - 1); ++i) {
+//         var rowDate = new Date(rows[i].getElementsByTagName("td")[5].innerText);
+//         if(rowDate <= dateTo) {
+//             rows[i].style.display = "";
+//         } else {
+//             rows[i].style.display = "none";
+//         }
+//     }
+// });
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('date-from').addEventListener('change', filterRows);
+    document.getElementById('date-to').addEventListener('change', filterRows);
+});
+
+function filterRows() {
+    var table = document.getElementById("emp-table");
+    var rows = table.rows;
+    var from = document.getElementById('date-from').value;
+    var to = document.getElementById('date-to').value;
+    
+    if(!from && !to) {
+        return;
+    }
+
+    from = from || "1900-01-01";
+    to = to || "2005-12-12"
+
+    var dateFrom = moment(from);
+    var dateTo = moment(to);
+
+    for(var i = 1; i <= (rows.length - 1); ++i) {
+        var rowDate = new Date(rows[i].getElementsByTagName("td")[5].innerText);
+        rowDate = moment(rowDate, "DD/MM/YYYY");
+        var visible = rowDate.isBetween(dateFrom, dateTo, null, []) ? "" : "none";
+        rows[i].style.display = visible;
+    }
+}
+
+// var bdate = new Date(data.birthdate);
+//     document.getElementById('birthday2').value = moment(bdate).format('yyyy-MM-DD');
